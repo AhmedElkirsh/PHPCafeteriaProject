@@ -1,5 +1,5 @@
 <?php
-
+// this class is simply for readability porpuses, it's used to store code status in a more human readable way
 namespace Core;
 
 class Response {

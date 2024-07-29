@@ -1,4 +1,5 @@
 <?php
+// this file is responsible for starting up the database connection (and any other service that will be repeatedly used throughout the website)
 
 use Core\App;
 use Core\Container;

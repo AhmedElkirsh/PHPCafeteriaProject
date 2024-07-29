@@ -1,5 +1,6 @@
 <?php 
-
+// this class is responsible of redirecting the uri request to the the desired controller file
+// you use this class in the routes.php file, but DO NOT come near this class.
 namespace Core;
 
 class Router {

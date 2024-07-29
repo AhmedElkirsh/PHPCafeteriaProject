@@ -1,5 +1,6 @@
 <?php 
-
+// this file contains helper functions that u can use throughout the project 
+// hint: use dd() to check if a varaible is holding the value you expect when just creating a new file 
 use Core\Response;
 
 function dd($value) {

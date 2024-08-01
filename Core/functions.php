@@ -34,3 +34,8 @@ function view($path,$attributes=[]) {
     extract($attributes);
     require BASE_PATH . "/views" . $path;
 }
+
+function redirect($path) {
+    header("location: {$path}");
+    die();
+}

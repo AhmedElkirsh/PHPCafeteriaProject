@@ -4,34 +4,21 @@ namespace Http\Forms;
 
 use Core\Validator;
 
-class RegisterationForm {
-    protected $img = [];
-    protected $errors = [];
+class RegisterationForm extends Form{
 
-    public function validate($name,$email,$password,$img) 
+    protected function validate() 
     {
-        if (!Validator::email($email)) {
+        if (!Validator::email($this->attributes['email'])) {
             $this->errors['email'] = 'Please provide a valid email address.';
         } 
-        if (!Validator::password($password,1,255)) {
+        if (!Validator::password($this->attributes['password'])) {
             $this->errors['password'] = 'Please provide a valid password.';
         } 
-        if (!Validator::name($name)) {
+        if (!Validator::name($this->attributes['name'])) {
             $this->errors['name'] = 'Please provide a valid name.';
         } 
-        if (!Validator::image($img)) {
+        if (!Validator::image($this->attributes['image'])) {
             $this->errors['image'] = 'Please provide a valid img.';
         } 
-        return (empty($this->errors));
-    }
-
-    public function errors()
-    {
-        return $this->errors;
-    }
-
-    public function error($field,$message)
-    {
-        $this->errors[$field]=$message;
-    }
+    } 
 }

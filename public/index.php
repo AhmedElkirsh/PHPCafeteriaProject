@@ -1,6 +1,11 @@
 <?php 
+
 session_start();
+
 use Core\Router;
+use Core\Session;
+use Core\ValidationException;
+
 const BASE_PATH = __DIR__ . "/../" ;
 require BASE_PATH . 'Core/functions.php';
 
@@ -11,11 +16,23 @@ spl_autoload_register(function($class){
 
 require base_path('bootstrap.php');
 
-$_SESSION['photo'] = $_FILES['photo']??[];
+$_SESSION['image'] = $_FILES['photo']??[];
 
 $router = new Router();
 $routes = require base_path('routes.php');
-$uri = parse_url($_SERVER["REQUEST_URI"])["path"];
 
+$uri = parse_url($_SERVER["REQUEST_URI"])["path"];
 $method = $_POST['_method'] ?? $_SERVER['REQUEST_METHOD'];
-$router->route($uri,$method);
+
+try {
+
+    $router->route($uri,$method);
+
+} catch (ValidationException $exception) {
+    Session::flash('old',$exception->old);
+    Session::flash('errors', $exception->errors);
+    return redirect($router->previousUrl());
+    
+}
+
+Session::unflash();

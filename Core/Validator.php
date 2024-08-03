@@ -13,6 +13,9 @@ class Validator {
     public static function name($value) {
         return preg_match("/^[A-Za-z]{3,}(?:[ '-][A-Za-z]{3,})*$/",$value);
     }
+    public static function role($value) {
+        return $value === "admin" || $value === "user";
+    }
     public static function image($img) {
 
         $fileName = $img['name'];
@@ -27,6 +30,9 @@ class Validator {
             return false;
         }
         return true;
+    }
+    public static function passwordconfirm($value, $origin) {
+        return $value === $origin;
     }
     
 }

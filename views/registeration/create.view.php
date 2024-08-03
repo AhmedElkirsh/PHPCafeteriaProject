@@ -53,22 +53,22 @@
             <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Register</button>
           </div>
           <ul>
-                    <?php if (isset($errors['name'])) : ?>
-                        <li class="text-red-500 text-xs mt-2"><?= $errors['name'] ?></li>
-                    <?php endif; ?>
+                <?php if (isset($errors['name'])) : ?>
+                    <li class="text-red-500 text-xs mt-2"><?= $errors['name'] ?></li>
+                <?php endif; ?>
 
-                    <?php if (isset($errors['password'])) : ?>
-                        <li class="text-red-500 text-xs mt-2"><?= $errors['password'] ?></li>
-                    <?php endif; ?>
+                <?php if (isset($errors['password'])) : ?>
+                    <li class="text-red-500 text-xs mt-2"><?= $errors['password'] ?></li>
+                <?php endif; ?>
 
-                    <?php if (isset($errors['email'])) : ?>
-                        <li class="text-red-500 text-xs mt-2"><?= $errors['email'] ?></li>
-                    <?php endif; ?>
+                <?php if (isset($errors['email'])) : ?>
+                    <li class="text-red-500 text-xs mt-2"><?= $errors['email'] ?></li>
+                <?php endif; ?>
 
-                    <?php if (isset($errors['image'])) : ?>
-                        <li class="text-red-500 text-xs mt-2"><?= $errors['image'] ?></li>
-                    <?php endif; ?>
-                </ul>
+                <?php if (isset($errors['image'])) : ?>
+                    <li class="text-red-500 text-xs mt-2"><?= $errors['image'] ?></li>
+                <?php endif; ?>
+          </ul>
         </form>
       </div>
     </div>

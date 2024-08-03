@@ -4,29 +4,16 @@ namespace Http\Forms;
 
 use Core\Validator;
 
-class LoginForm {
 
-    protected $errors = [];
+class LoginForm extends Form{
 
-    public function validate($email,$password) 
+    protected function validate()
     {
-        if (!Validator::email($email)) {
-            $this->errors['email'] = 'Please provide a valid email address.';
+        if (!Validator::email($this->attributes['email'])) {
+            $this->error('email', 'Please provide a valid email address.');
         }
-
-        if (!Validator::password($password)) {
-            $this->errors['password'] = 'Please provide a valid password.';
+        if (!Validator::password($this->attributes['password'])) {
+            $this->error('password', 'Please provide a valid password.');
         }
-        return (empty($this->errors));
-    }
-
-    public function errors()
-    {
-        return $this->errors;
-    }
-
-    public function error($field,$message)
-    {
-        $this->errors[$field]=$message;
     }
 }

@@ -23,7 +23,7 @@ class Validator {
         if (!in_array($fileExtension, $allowedExtensions)) {         
             return false;
         }
-        if ($fileSize > 500000) {
+        if ($fileSize > 1000000) {
             return false;
         }
         return true;

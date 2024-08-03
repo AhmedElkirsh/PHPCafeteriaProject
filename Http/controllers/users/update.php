@@ -5,19 +5,18 @@ use Core\Database;
 use Core\Session;
 use Http\Forms\EditUserForm;
 
+
 $db = App::resolve(Database::class);
 $form = EditUserForm::validateAttributes($attributes = [
     
     'name' => $_POST['name'],
     'password' => $_POST['password'],
+    'email' => $_POST['email'],
     'passwordconfirm' => $_POST['passwordconfirm'],
     'image' => $_SESSION['image'],
 
 ]);
-
-authorize(Session::get('user')['role'] === 'admin');
-
-$notRegistered = (new Authenticator)->attemptEditUser($attributes['name'],$attributes['email'],$attributes['password'],$attributes['image'],$attributes['role']);
+$notRegistered = (new Authenticator)->attemptEditUser($attributes['name'],$attributes['email'],$attributes['password'],$attributes['image']);
 
 
 if(! $notRegistered ) {

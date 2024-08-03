@@ -28,6 +28,7 @@ try {
     $router->route($uri,$method);
 
 } catch (ValidationException $exception) {
+    
     Session::flash('old',$exception->old);
     Session::flash('errors', $exception->errors);
     return redirect($router->previousUrl());

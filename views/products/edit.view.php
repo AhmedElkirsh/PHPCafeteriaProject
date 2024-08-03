@@ -1,5 +1,41 @@
 <?php view('/partials/head.php'); ?>
 <?php view('/partials/nav.php'); ?>
+<main>
+    <form action="/products" method="POST" class="w-50 m-auto">
+        <input type="hidden" name="product" value="<?php echo $productName; ?>">
+        <div class="mb-3">
+            <label for="newprice" class="form-label">new price</label>
+            <input type="number" class="form-control" id="newprice" placeholder="new price" name="newPrice">
+        </div>
+        <select class="form-select w-50 d-inline" id="category" name="category">
+            <?php
+                foreach($result as $option)
+                {
+                    echo "<option value=" . $option["categoryname"] . ">" . $option["categoryname"] . "</option>";
+                }
+            ?>
+        </select>
+        <a href="newCategory.php" class="d-inline-block w-25">Add new category</a>
+        <div class="mb-3 mt-3">
+            <label for="newpicture" class="form-label">new product picture</label>
+            <input type="file" class="form-control" id="newpicture" name="image">
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="newtime" class="form-label">new time</label>
+            <input type="number" class="form-control" id="newtime" name="newTime">
+            </div>
+    
+        <div class="mb-3 mt-3">
+            <label for="newStatus" class="form-label">new status</label>
+            <input type="text" class="form-control" id="newStatus" name="newStatus">
+        </div>
+        <input type="submit" value="update" name="updateProduct" class="btn btn-primary">
+        <a href="/products" class="btn btn-danger">cancel</a>
+    </form>
+</main>
+
+
+
 <main class="w-full flex justify-center">
     <div class="w-full max-w-md p-4 bg-white rounded-md shadow-md mt-7">
         <h1 class="text-2xl font-bold text-gray-900 text-center mb-3">EDIT USER</h1>
@@ -68,6 +104,7 @@
         </form>
     </div>
 </main>
+
 <script>
     document.getElementById('changeButton').addEventListener('click', function() {
         document.getElementById('photo').click();

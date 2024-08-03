@@ -81,31 +81,34 @@ class Authenticator {
     }
     public function attemptEditUser($name,$email,$password,$img) 
     {
+
         $user = App::resolve(Database::class)->query('select * from users where email = :email', [
             'email' => $email
         ])->find();
+       if ($user) {
 
-       if (!$user) {
-
-        $uploadDir = $img ? FileNameGenerator::generatePath($img,FileNameGenerator::USERS_DIR) : null;
-        $password = $password ? password_hash($password, PASSWORD_BCRYPT) : $user['password'] ;
-        //fix issue related to handling failed upload
-        if(FileNameGenerator::checkUpload($img["tmp_name"], $uploadDir)){
-
-            App::resolve(Database::class)->query('update user set name = :name, password = :password, upload_dir = :upload_dir where email= :email',[
+            $uploadDir = $img['size'] ? FileNameGenerator::generatePath($img,FileNameGenerator::USERS_DIR) : $user['upload_dir'];
+            $password = $password ? password_hash($password, PASSWORD_BCRYPT) : $user['password'] ;
+            //fix issue related to handling failed upload
+            //fix duplication of storage when editing photo
+            if($img['size']) {
+                FileNameGenerator::checkUpload($img["tmp_name"], $uploadDir);
+            } 
+                
+            App::resolve(Database::class)->query('update users set name = :name, password = :password, upload_dir = :upload_dir where email= :email',[
                 'name' => $name,
                 'password' => $password,
                 'email' => $email,
                 'upload_dir' => $uploadDir ?? $user['upload_dir'] , 
             ]);
-        
+
             return true;
         }
 
         return false;
-       }
-        
     }
+        
+    
             
     function login($user)
     {

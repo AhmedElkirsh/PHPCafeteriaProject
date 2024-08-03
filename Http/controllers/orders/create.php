@@ -1,3 +1,5 @@
 <?php 
-view('/orders/create.view.php');
+view('/orders/create.view.php',[
+    'product' => $products,
+]);
 

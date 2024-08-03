@@ -23,4 +23,13 @@ $router->post('/users/edit', 'users/edit.php');
 $router->get('/users/create', 'users/create.php');
 $router->post('/users', 'users/store.php');
 
-$router->patch('/users/update', 'users/update.php');
+$router->patch('/users', 'users/update.php');
+
+$router->get('/products', 'products/index.php');
+$router->destroy('/products/destroy', 'products/destroy.php');
+
+$router->post('/products/edit', 'products/edit.php');
+
+$router->get('/products/create', 'products/create.php');
+$router->post('/products', 'products/store.php');
+$router->patch('/products', 'products/update.php');

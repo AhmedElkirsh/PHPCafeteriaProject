@@ -19,8 +19,12 @@ class EditUserForm extends Form{
                 $this->errors['passwordconfirm'] = 'your passwords do not match.';
             }
         }  
-        if (!Validator::image($this->attributes['image'])) {
-            $this->errors['image'] = 'Please provide a valid img.';
-        } 
+
+        if ($this->attributes['image']['size']) {
+            if (!Validator::image($this->attributes['image'])) {
+                $this->errors['image'] = 'Please provide a valid img.';
+            } 
+        }
+        
     } 
 }

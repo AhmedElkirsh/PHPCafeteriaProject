@@ -4,11 +4,11 @@
 
 <?php foreach ($users as $user) :?>
     <ul>
-        <li><?= $user['id'] ?></li>
+   
         <li><?= $user['name'] ?></li>
-        <li><?= $user['email'] ?></li>
-        <li><?= $user['role'] ?></li>
-`    </ul>
+        <li><?= $user['total_price'] ?></li>
+
+    </ul>
 <?php endforeach ?>
 </main>
 

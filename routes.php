@@ -14,3 +14,13 @@ $router->destroy('/session', 'session/destroy.php')->only('auth');
 $router->get('/checks', 'checks/index.php');
 $router->post('/checks', 'checks/show.php');
 $router->post('/checks/order', 'checks/showOrder.php');
+
+$router->get('/users', 'users/index.php');
+$router->destroy('/users/destroy', 'users/destroy.php');
+
+$router->post('/users/edit', 'users/edit.php');
+
+$router->get('/users/create', 'users/create.php');
+$router->post('/users', 'users/store.php');
+
+$router->patch('/users/update', 'users/update.php');

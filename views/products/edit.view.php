@@ -1,79 +1,47 @@
 <?php view('/partials/head.php'); ?>
 <?php view('/partials/nav.php'); ?>
-<main>
-    <form action="/products" method="POST" class="w-50 m-auto">
-        <input type="hidden" name="product" value="<?php echo $productName; ?>">
-        <div class="mb-3">
-            <label for="newprice" class="form-label">new price</label>
-            <input type="number" class="form-control" id="newprice" placeholder="new price" name="newPrice">
-        </div>
-        <select class="form-select w-50 d-inline" id="category" name="category">
-            <?php
-                foreach($result as $option)
-                {
-                    echo "<option value=" . $option["categoryname"] . ">" . $option["categoryname"] . "</option>";
-                }
-            ?>
-        </select>
-        <a href="newCategory.php" class="d-inline-block w-25">Add new category</a>
-        <div class="mb-3 mt-3">
-            <label for="newpicture" class="form-label">new product picture</label>
-            <input type="file" class="form-control" id="newpicture" name="image">
-        </div>
-        <div class="mb-3 mt-3">
-            <label for="newtime" class="form-label">new time</label>
-            <input type="number" class="form-control" id="newtime" name="newTime">
-            </div>
-    
-        <div class="mb-3 mt-3">
-            <label for="newStatus" class="form-label">new status</label>
-            <input type="text" class="form-control" id="newStatus" name="newStatus">
-        </div>
-        <input type="submit" value="update" name="updateProduct" class="btn btn-primary">
-        <a href="/products" class="btn btn-danger">cancel</a>
-    </form>
-</main>
-
-
-
 <main class="w-full flex justify-center">
     <div class="w-full max-w-md p-4 bg-white rounded-md shadow-md mt-7">
-        <h1 class="text-2xl font-bold text-gray-900 text-center mb-3">EDIT USER</h1>
-        <form action="/users" method="POST" enctype="multipart/form-data" class="space-y-4">
-        <input type="hidden" name="_method" value="PATCH">
+        <h1 class="text-2xl font-bold text-gray-900 text-center mb-3">EDIT PRODUCT</h1>
+        <form action="/products/update" method="POST" enctype="multipart/form-data" class="space-y-4">
+            <input type="hidden" name="_method" value="PATCH">
             <div>
-                <label for="name" class="block text-sm font-medium text-gray-900">Name</label>
-                <input id="name" name="name" type="text" value ="<?= $user['name'] ?>" autocomplete="name" required class="block w-full rounded-md border-gray-300 py-1 text-gray-900 shadow-sm focus:ring-indigo-600 sm:text-sm">
+                <label for="name2" class="block text-sm font-medium text-gray-900">Name</label>
+                <input id="name2" name="name2" type="text" autocomplete="name" disabled value="<?= $product['name'] ?>" required class="block w-full rounded-md border-gray-300 py-1 text-gray-900 shadow-sm focus:ring-indigo-600 sm:text-sm">
+            </div>
+            <input type="hidden" name="name" value="<?= $product['name'] ?>" >
+            <div>
+                <label for="price" class="block text-sm font-medium text-gray-900">Price</label>
+                <input id="price" name="price" value="<?= $product['price'] ?>" class="block w-full rounded-md border-gray-300 py-1 text-gray-900 shadow-sm focus:ring-indigo-600 sm:text-sm">
             </div>
             <div>
-                <label for="email" class="block text-sm font-medium text-gray-900">Email address</label>
-                <input id="email2" name="email2" type="email" disabled  value ="<?= $user['email'] ?>" class="block w-full rounded-md border-gray-300 py-1 text-gray-900 shadow-sm focus:ring-indigo-600 sm:text-sm">
+                <label for="time" class="block text-sm font-medium text-gray-900">Time</label>
+                <input id="time" name="time" value="<?= $product['time'] ?>" class="block w-full rounded-md border-gray-300 py-1 text-gray-900 shadow-sm focus:ring-indigo-600 sm:text-sm">
             </div>
             <div>
-                <label for="email" class="block text-sm font-medium text-gray-900">Email address</label>
-                <input id="email" name="email" type="hidden"  value ="<?= $user['email'] ?>" class="block w-full rounded-md border-gray-300 py-1 text-gray-900 shadow-sm focus:ring-indigo-600 sm:text-sm">
+                <label for="categoryname" class="block text-sm font-medium text-gray-900">Category</label>
+                <input id="categoryname" name="categoryname"  list="categoryOptions" autocomplete="off" required class="block w-full rounded-md border-gray-300 py-1 text-gray-900 shadow-sm focus:ring-indigo-600 sm:text-sm">
+                <datalist id="categoryOptions">
+                    <?php foreach ($categories as $category) : ?>
+                    <option value="<?= $category['categoryname'] ?>">
+                    <?php endforeach ?>
+                </datalist>
             </div>
+
             <div>
-                <button type="button" id="togglePasswordButton" class="rounded-md bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Change Password</button>
-            </div>
-            <div id="passwordFields" class="hidden">
-                <div>
-                    <label for="password" class="block text-sm font-medium text-gray-900">Password</label>
-                    <input id="password" name="password" type="password" class="block w-full rounded-md border-gray-300 py-1 text-gray-900 shadow-sm focus:ring-indigo-600 sm:text-sm">
+                <label class="block text-sm font-medium text-gray-900">Product Status</label>
+                <div class="flex items-center mt-2">
+                    <input id="productStatus" name="productStatus" type="radio" <?= $product['productStatus']==='available'? 'checked' : '' ?> value="available" class="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-600">
+                    <label for="productStatus" class="ml-2 block text-sm font-medium text-gray-900">available</label>
                 </div>
-                <div>
-                    <label for="confirm" class="block text-sm font-medium text-gray-900">Confirm Password</label>
-                    <input id="confirm" name="passwordconfirm" type="password" class="block w-full rounded-md border-gray-300 py-1 text-gray-900 shadow-sm focus:ring-indigo-600 sm:text-sm">
+                <div class="flex items-center mt-2">
+                    <input id="productStatus" name="productStatus" type="radio" <?= $product['productStatus']==='unavailable'? 'checked' : '' ?> value="unavailable" class="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-600">
+                    <label for="productStatus" class="ml-2 block text-sm font-medium text-gray-900">unavailable</label>
                 </div>
             </div>
 
-            <!-- <div>
-                <label for="phonenumber" class="block text-sm font-medium text-gray-900">Phone Number</label>
-                <input id="phonenumber" name="phonenumber" type="text" value ="<?= $user['phonenumber'] ?? '' ?>" autocomplete="off" required class="block w-full rounded-md border-gray-300 py-1 text-gray-900 shadow-sm focus:ring-indigo-600 sm:text-sm">
-            </div> -->
-
             <div>
-                <label for="photo" class="block text-sm font-medium text-gray-900">Upload a profile picture</label>
+                <label for="photo" class="block text-sm font-medium text-gray-900">Upload a product picture</label>
                 <input type="file" id="photo" name="photo" class="hidden" accept="image/png, image/jpeg, image/jpg">
                 <div class="mt-2 flex items-center gap-x-2">
                     <svg id="defaultSvg" class="h-10 w-10 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -88,14 +56,20 @@
                 <?php if (isset($errors['name'])) : ?>
                     <li class="text-red-500 text-xs"><?= $errors['name'] ?></li>
                 <?php endif; ?>
-                <?php if (isset($errors['password'])) : ?>
-                    <li class="text-red-500 text-xs"><?= $errors['password'] ?></li>
+                <?php if (isset($errors['category'])) : ?>
+                    <li class="text-red-500 text-xs"><?= $errors['category'] ?></li>
                 <?php endif; ?>
-                <?php if (isset($errors['email'])) : ?>
-                    <li class="text-red-500 text-xs"><?= $errors['email'] ?></li>
+                <?php if (isset($errors['status'])) : ?>
+                    <li class="text-red-500 text-xs"><?= $errors['status'] ?></li>
+                <?php endif; ?>
+                <?php if (isset($errors['price'])) : ?>
+                    <li class="text-red-500 text-xs"><?= $errors['price'] ?></li>
                 <?php endif; ?>
                 <?php if (isset($errors['image'])) : ?>
                     <li class="text-red-500 text-xs"><?= $errors['image'] ?></li>
+                <?php endif; ?>
+                <?php if (isset($errors['time'])) : ?>
+                    <li class="text-red-500 text-xs"><?= $errors['time'] ?></li>
                 <?php endif; ?>
             </ul>
             <div>

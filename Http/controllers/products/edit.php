@@ -7,7 +7,11 @@ use Core\Session;
 $db = App::resolve(Database::class);
 $product = $db->query("select * from product where name= :name", ['name' => $_POST['name']])->find();
 
+$db = App::resolve(Database::class);
+$categories = $db->query('select * from category')->get();
+
 view("/products/edit.view.php", [
-    'user' => $user,
+    'product' => $product,
+    'categories' => $categories,
     'errors' => Session::get('errors'),
 ]);

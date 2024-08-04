@@ -20,12 +20,12 @@ $form = AddUserForm::validateAttributes($attributes = [
 authorize(Session::get('user')['role'] === 'admin');
 
 $notRegistered = (new Authenticator)->attemptAddUser($attributes['name'],$attributes['email'],$attributes['password'],$attributes['image'],$attributes['role']);
-
 if(! $notRegistered ) {
-    
+
     Session::flash('errors',[
         'email' => "there's already a user with that email"
     ]);
+    
     Session::flash('old',[
         'email' => $_POST['email'],
         'name' => $_POST['name'],

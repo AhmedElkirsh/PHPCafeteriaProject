@@ -1,37 +1,40 @@
 <?php
-/************************************Connection to database*****************************************/
-use Http\Forms\FileNameGenerator;
 use Core\App;
+use Core\Authenticator;
 use Core\Database;
+use Core\Session;
+use Http\Forms\ProductForm;
+
 $db = App::resolve(Database::class);
-/************************************validation on data*****************************************/
-// if (isset($_POST['saveData'])) {
-    $product = $_POST["product"];
-    $price = $_POST["price"];
-    $category = $_POST["category"];
-    echo $category;
-    // $image=$_POST["image"];
-    $time = $_POST["time"]; 
-    $status = $_POST["status"]; 
-    $img=$_POST["image"];
+
+$form = ProductForm::validateAttributes($attributes = [
     
-    // $image_name=$_FILES['image']['name'];
-    // $tmp_name=$_FILES['image']['tmp_name'];
-    // $path="uploads/".$image_name;
-    // $uploaded=move_uploaded_file($tmp_name,$path); 
-    // $image=$path;
-/***************************get category id to insert it into product table******************************* */
-        // $result = $db->query("select categoryid from category where categoryname = :category")->get();
-        // $x=$result['categoryid'];
-        // echo $x;
-/***************************insert new product into table*********************************************** */
-    // $db->query("INSERT INTO product (name, productStatus, price, image,time,categoryid) VALUES ($product, $status, $price, $image,$time,$x)");
-// }
-/****************************************adding new category validation**************************/
-// if(isset($_POST["newCategory"]))
-    global $db;
-    $addedCategory=$_POST["addedCategory"];
-    echo $addedCategory;
-    $db->query("INSERT INTO category (categoryname) VALUES $addedCategory");
-// header("location:index.php");
-?>
+    'name' => $_POST["name"],
+    'price' => $_POST["price"],
+    'category' => $_POST["categoryname"],
+    'time' => $_POST["time"],
+    'status' => $_POST["productStatus"],
+    'img'=>$_SESSION["image"],
+
+]);
+
+authorize(Session::get('user')['role'] === 'admin');
+$notSaved = (new Authenticator)->attemptAddProduct($attributes['name'],$attributes['category'],$attributes['price'],$attributes['time'],$attributes['status'],$attributes['img']);
+
+if(! $notSaved ) {
+    
+    Session::flash('errors',[
+        'name' => "there's already a product with that name"
+    ]);
+    Session::flash('old',[
+        'price' => $_POST['price'],
+        'productStatus' => $_POST['productStatus'],
+        'time' => $_POST['time'],
+        'name' => $_POST['name'],
+        'status' => $_POST["status"],
+    ]);
+    redirect('/products/create');
+
+}
+
+redirect('/products');

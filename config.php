@@ -4,10 +4,10 @@
 return [
     'database'=> [
 
-        'host'=> 'localhost',
+        'host'=> 'sql7.freesqldatabase.com',
         'port'=> 3306,
-        'dbname'=> 'notes',
-        'charset'=> 'utf8mb4'
+        'dbname'=> 'sql7722701',
+
     ]
 ] 
 ;

@@ -3,6 +3,8 @@
 // and note convention of the naming of the files and folders, below is a commented out example to follow
 // very small changes might apply in the future 
 $router->get('/','orders/create.php');
+$router->post('/orders','orders/store.php');
+// $router->destroy('/orders/detroy','orders/destroy.php');
 
 $router->get('/register','registeration/create.php')->only('guest');
 $router->post('/register', 'registeration/store.php')->only('guest');
@@ -26,10 +28,9 @@ $router->post('/users', 'users/store.php');
 $router->patch('/users', 'users/update.php');
 
 $router->get('/products', 'products/index.php');
-$router->destroy('/products/destroy', 'products/destroy.php');
-
 $router->post('/products/edit', 'products/edit.php');
+$router->destroy('/products', 'products/destroy.php');
 
 $router->get('/products/create', 'products/create.php');
 $router->post('/products', 'products/store.php');
-$router->patch('/products', 'products/update.php');
+$router->patch('/products/update', 'products/update.php');

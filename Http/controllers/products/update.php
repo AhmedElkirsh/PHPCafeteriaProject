@@ -1,25 +1,37 @@
 <?php
-/*********************************************Connection to database************************************/
-    use Core\App;
-    use Core\Database;
-    $db = App::resolve(Database::class);
-/*********************************************Data validation********************************************/
-if (isset($_POST['updateProduct'])) {
-    $product=$_POST["product"];
-    $newPrice = $_POST["newPrice"];
-    // $image = $_POST["image"];
-    // $category = $_POST['category'];
-    $newTime=$_POST["newTime"];
-    $newStatus = $_POST["newStatus"];
-    // echo $product;
-/***************************************fetch all categories*******************************************/
-   
-    if ($db !== null) {
-           $db->query("update product set price=:newPrice,time=:newTime,productStatus=:newStatus where name=:product");
-            
-    } else {
-        die('Database connection is not established.');
-    }
-    // header("location:index.php");
+use Core\App;
+use Core\Authenticator;
+use Core\Database;
+use Core\Session;
+use Http\Forms\ProductForm;
+$db = App::resolve(Database::class);
+
+$form = ProductForm::validateAttributes($attributes = [
+    
+    'name' => $_POST["name"],
+    'price' => $_POST["price"],
+    'category' => $_POST["categoryname"],
+    'time' => $_POST["time"],
+    'status' => $_POST["productStatus"],
+    'img'=>$_SESSION["image"],
+
+]);
+authorize(Session::get('user')['role'] === 'admin');
+$Exists = (new Authenticator)->attemptEditProduct($attributes['name'],$attributes['category'],$attributes['price'],$attributes['time'],$attributes['status'],$attributes['img']);
+if(! $Exists ) {
+    
+    Session::flash('errors',[
+        'name' => "there's no product with that name"
+    ]);
+    Session::flash('old',[
+        'price' => $_POST['price'],
+        'productStatus' => $_POST['productStatus'],
+        'time' => $_POST['time'],
+        'name' => $_POST['name'],
+        'status' => $_POST["status"],
+    ]);
+    redirect('/products/edit');
+
 }
-?>
+
+redirect('/products');

@@ -20,7 +20,6 @@ class Form {
     public static function validateAttributes($attributes) 
     {
         $instance = new static($attributes);
-        
         return $instance->failed() ? $instance->throw() : $instance;     
     } 
     public function failed()

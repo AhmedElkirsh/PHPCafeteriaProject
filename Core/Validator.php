@@ -34,5 +34,14 @@ class Validator {
     public static function passwordconfirm($value, $origin) {
         return $value === $origin;
     }
+    public static function productStatus($value) {
+        return ($value === "available") || ($value === "unavailable");
+    }
+    public static function time($value) {
+        return is_numeric($value);
+    }
+    public static function price($value) {
+        return is_numeric($value);
+    }
     
 }

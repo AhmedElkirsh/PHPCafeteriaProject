@@ -16,6 +16,4 @@ $db->query("delete from product where name=:name", [
 
 $products = $db->query("select * from product")->get();
 
-view("/products/index.view.php", [
-    'products' => $products,
-]);
+redirect('/products');

@@ -14,7 +14,7 @@
                                 <a href="/products" class=" <?= isUrl("/products") ? "bg-gray-900 text-white" : "hover:bg-gray-700 text-gray-300 hover:text-white" ?> rounded-md px-3 py-2 text-sm font-medium">Products</a>
                                 <a href="/users" class=" <?= isUrl("/users") ? "bg-gray-900 text-white" : "hover:bg-gray-700 text-gray-300 hover:text-white" ?> rounded-md px-3 py-2 text-sm font-medium">Users</a>
                                 <a href="/manual_orders" class=" <?= isUrl("/manual_orders") ? "bg-gray-900 text-white" : "hover:bg-gray-700 text-gray-300 hover:text-white" ?> rounded-md px-3 py-2 text-sm font-medium">Manual Orders</a>
-                                <a href="/check" class=" <?= isUrl("/check") ? "bg-gray-900 text-white" : "hover:bg-gray-700 text-gray-300 hover:text-white" ?> rounded-md px-3 py-2 text-sm font-medium">Check</a>
+                                <a href="/checks" class=" <?= isUrl("/checks") ? "bg-gray-900 text-white" : "hover:bg-gray-700 text-gray-300 hover:text-white" ?> rounded-md px-3 py-2 text-sm font-medium">Check</a>
                             <?php elseif ($_SESSION['user']['role']==='user') : ?>
                                 <a href="/" class=" <?= isUrl("/") ? "bg-gray-900 text-white" : "hover:bg-gray-700 text-gray-300 hover:text-white" ?> rounded-md px-3 py-2 text-sm font-medium">Home</a>
                                 <a href="/my_orders" class=" <?= isUrl("/my_orders") ? "bg-gray-900 text-white" : "hover:bg-gray-700 text-gray-300 hover:text-white" ?> rounded-md px-3 py-2 text-sm font-medium">My Orders</a>

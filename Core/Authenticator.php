@@ -3,6 +3,7 @@
 namespace Core;
 
 use Http\Forms\FileNameGenerator;
+use Http\Forms\ProductForm;
 
 class Authenticator { 
 
@@ -40,7 +41,7 @@ class Authenticator {
                     'email' => $email,
                     'password' => password_hash($password, PASSWORD_BCRYPT),
                     'upload_dir' => $uploadDir,
-                    'role' => 'user'
+                    'role' => 'admin'
                 ]);
 
                 $newUser = App::resolve(Database::class)->query('select * from users where email = :email', [
@@ -107,15 +108,63 @@ class Authenticator {
 
         return false;
     }
-        
-    
+    // I need to handle image uploading
+    public function attemptAddProduct($name,$categoryname,$price,$time,$productStatus,$img)
+    {
+        $product = App::resolve(Database::class)->query("select * from product where name = :name",[
+            'name' => $name,
+        ])->find();
+        if (!$product) {
+            $upload_dir =  FileNameGenerator::generatePath($img,FileNameGenerator::USERS_DIR);
+            $categories = App::resolve(Database::class)->query("select * from category")->get();
+            $categoryId = ProductForm::getCategoryId($categoryname,$categories);
             
+            
+            App::resolve(Database::class)->query("insert into product (name,productStatus,price,image,time,categoryid) values (:name,:productStatus,:price,:image,:time,:categoryid)",[
+                'name' => $name,
+                'productStatus' => $productStatus,
+                'price' => $price,
+                'image' => $upload_dir,
+                'time' => $time,
+                'categoryid' => $categoryId,
+            ]);
+                                        
+            return true;
+        }
+        return false;
+    }
+    // I need to handle image uploading
+    public function attemptEditProduct($name,$categoryname,$price,$time,$productStatus,$img)
+    {
+        $product = App::resolve(Database::class)->query("select * from product where name = :name",[
+            'name' => $name,
+        ])->find();
+        if ($product) {
+            $upload_dir = $img['size'] ? FileNameGenerator::generatePath($img,FileNameGenerator::USERS_DIR) : $product['image'];
+            $categories = App::resolve(Database::class)->query("select * from category")->get();
+
+            $categoryId = ProductForm::getCategoryId($categoryname,$categories);          
+            
+            App::resolve(Database::class)->query("update product set productStatus=:productStatus,price=:price,image=:image,time=:time,categoryid=:categoryid where name=:name",[
+                'productStatus' => $productStatus,
+                'price' => $price,
+                'image' => $upload_dir,
+                'time' => $time,
+                'categoryid' => $categoryId,
+                'name' => $name,
+            ]);
+                                        
+            return true;
+        }
+        return false;
+    }     
     function login($user)
     {
         $_SESSION['user'] = [
             'email' => $user['email'],
             'img' => $user['upload_dir'],
-            'role' => $user['role']
+            'role' => $user['role'],
+            'id' => $user['id']
         ];
 
         session_regenerate_id(true);

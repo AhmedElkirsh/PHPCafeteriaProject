@@ -1,7 +1,7 @@
 <?php view('/partials/head.php'); ?>
 <?php view('/partials/nav.php'); ?>
 <main>
-<?php include 'Database.php'; ?>
+<?php include 'db.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,17 +9,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Orders</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         .action-col {
             width: 1%;
             white-space: nowrap;
-        }
-        .table-sm th, .table-sm td {
-            padding: 0.3rem;
-        }
-        .small-table {
-            font-size: 0.8rem;
         }
         .product-image {
             width: 50px; 
@@ -28,118 +22,119 @@
     </style>
 </head>
 <body>
-<div class="container mt-5">
-    <h2>User Orders</h2>
+<div class="container mx-auto mt-5">
+    <h2 class="text-2xl font-bold mb-4">User Orders</h2>
     
-
+    
     <form method="get" class="mb-4">
-        <div class="form-row">
-            <div class="col">
-                <input type="date" name="start_date" class="form-control" placeholder="Start Date" value="<?php echo isset($_GET['start_date']) ? $_GET['start_date'] : ''; ?>" required>
+        <div class="grid grid-cols-3 gap-4">
+            <div>
+                <input type="date" name="start_date" class="form-input mt-1 block w-full" placeholder="Start Date" value="<?php echo isset($_GET['start_date']) ? $_GET['start_date'] : ''; ?>" required>
             </div>
-            <div class="col">
-                <input type="date" name="end_date" class="form-control" placeholder="End Date" value="<?php echo isset($_GET['end_date']) ? $_GET['end_date'] : ''; ?>" required>
+            <div>
+                <input type="date" name="end_date" class="form-input mt-1 block w-full" placeholder="End Date" value="<?php echo isset($_GET['end_date']) ? $_GET['end_date'] : ''; ?>" required>
             </div>
-            <div class="col">
-                <button type="submit" class="btn btn-primary">Filter</button>
+            <div>
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Filter</button>
             </div>
         </div>
     </form>
 
-    <table class="table table-bordered table-sm small-table">
-        <thead>
-            <tr>
-                <th class="action-col">Action</th>
-                <th>User Name</th>
-                <th>Total Price</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            
-            $startDate = isset($_GET['start_date']) ? $_GET['start_date'] : null;
-            $endDate = isset($_GET['end_date']) ? $_GET['end_date'] : null;
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white">
+            <thead>
+                <tr>
+                    <th class="action-col px-4 py-2 border">Action</th>
+                    <th class="px-4 py-2 border">User Name</th>
+                    <th class="px-4 py-2 border">Total Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                         
+                $startDate = isset($_GET['start_date']) ? $_GET['start_date'] : null;
+                $endDate = isset($_GET['end_date']) ? $_GET['end_date'] : null;
 
-            if ($startDate && $endDate) {
-                // Query that get data from Tables 
-                $sql = "
-                    SELECT u.id, u.name, o.orderid as order_id, o.date, p.name as product_name, p.price, p.image
-                    FROM users u
-                    JOIN takes t ON u.id = t.userid
-                    JOIN product p ON t.productname = p.name
-                    JOIN `order` o ON t.orderid = o.orderid
-                    WHERE o.date BETWEEN '$startDate' AND '$endDate'
-                    ORDER BY u.id, o.orderid
-                ";
-                $result = $conn->query($sql);
+                if ($startDate && $endDate) {
+                    // Query 
+                    $sql = "
+                        SELECT u.id, u.name, o.id as order_id, o.date, p.name as product_name, p.price, p.image
+                        FROM users u
+                        JOIN takes t ON u.id = t.userid
+                        JOIN product p ON t.productname = p.name
+                        JOIN `order` o ON t.orderid = o.id
+                        WHERE o.date BETWEEN '$startDate' AND '$endDate'
+                        ORDER BY u.id, o.id
+                    ";
+                    $result = $conn->query($sql);
 
-                $users = [];
-                while($row = $result->fetch_assoc()) {
-                    $userId = $row['id'];
-                    $orderId = $row['order_id'];
-                    $users[$userId]['name'] = $row['name'];
-                    $users[$userId]['orders'][$orderId]['date'] = $row['date'];
-                    $users[$userId]['orders'][$orderId]['products'][] = [
-                        'name' => $row['product_name'], 
-                        'price' => $row['price'],
-                        'image' => $row['image']
-                    ];
-                }
-
-                foreach ($users as $userId => $user) {
-                    $totalPrice = 0;
-                    foreach ($user['orders'] as $order) {
-                        foreach ($order['products'] as $product) {
-                            $totalPrice += $product['price'];
-                        }
+                    $users = [];
+                    while($row = $result->fetch_assoc()) {
+                        $userId = $row['id'];
+                        $orderId = $row['order_id'];
+                        $users[$userId]['name'] = $row['name'];
+                        $users[$userId]['orders'][$orderId]['date'] = $row['date'];
+                        $users[$userId]['orders'][$orderId]['products'][] = [
+                            'name' => $row['product_name'], 
+                            'price' => $row['price'],
+                            'image' => $row['image']
+                        ];
                     }
-                    echo "<tr data-user-id='{$userId}'>";
-                    echo "<td><button class='btn btn-primary btn-sm toggle-details'>+</button></td>";
-                    echo "<td>{$user['name']}</td>";
-                    echo "<td>\${$totalPrice}</td>";
-                    echo "</tr>";
 
-                    foreach ($user['orders'] as $orderId => $order) {
-                        $orderPrice = array_sum(array_column($order['products'], 'price'));
-                        echo "<tr class='order-details' data-user-id='{$userId}' style='display: none;'>";
-                        echo "<td colspan='3'>";
-                        echo "<table class='table table-bordered table-sm small-table'>";
-                        echo "<thead><tr><th>Order Date</th><th>Total Price</th><th>Action</th></tr></thead><tbody>";
-                        echo "<tr data-order-id='{$orderId}'>";
-                        echo "<td>{$order['date']}</td>";
-                        echo "<td>\${$orderPrice}</td>";
-                        echo "<td><button class='btn btn-primary btn-sm toggle-products'>+</button></td>";
+                    foreach ($users as $userId => $user) {
+                        $totalPrice = 0;
+                        foreach ($user['orders'] as $order) {
+                            foreach ($order['products'] as $product) {
+                                $totalPrice += $product['price'];
+                            }
+                        }
+                        echo "<tr data-user-id='{$userId}'>";
+                        echo "<td class='px-4 py-2 border'><button class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded toggle-details'>+</button></td>";
+                        echo "<td class='px-4 py-2 border'>{$user['name']}</td>";
+                        echo "<td class='px-4 py-2 border'>\${$totalPrice}</td>";
                         echo "</tr>";
 
-                        echo "<tr class='product-details' data-order-id='{$orderId}' style='display: none;'>";
-                        echo "<td colspan='3'>";
-                        echo "<table class='table table-bordered table-sm small-table'>";
-                        echo "<thead><tr><th>Product Image</th><th>Price</th></tr></thead><tbody>";
-
-                        foreach ($order['products'] as $product) {
-                            echo "<tr>";
-                            echo "<td><img src='{$product['image']}' class='product-image' alt='{$product['name']}'></td>";
-                            echo "<td>\${$product['price']}</td>";
+                        foreach ($user['orders'] as $orderId => $order) {
+                            $orderPrice = array_sum(array_column($order['products'], 'price'));
+                            echo "<tr class='order-details' data-user-id='{$userId}' style='display: none;'>";
+                            echo "<td colspan='3' class='p-0'>";
+                            echo "<table class='min-w-full bg-gray-100'>";
+                            echo "<thead><tr><th class='px-4 py-2 border'>Order Date</th><th class='px-4 py-2 border'>Total Price</th><th class='px-4 py-2 border'>Action</th></tr></thead><tbody>";
+                            echo "<tr data-order-id='{$orderId}'>";
+                            echo "<td class='px-4 py-2 border'>{$order['date']}</td>";
+                            echo "<td class='px-4 py-2 border'>\${$orderPrice}</td>";
+                            echo "<td class='px-4 py-2 border'><button class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded toggle-products'>+</button></td>";
                             echo "</tr>";
+
+                            echo "<tr class='product-details' data-order-id='{$orderId}' style='display: none;'>";
+                            echo "<td colspan='3' class='p-0'>";
+                            echo "<table class='min-w-full bg-gray-100'>";
+                            echo "<thead><tr><th class='px-4 py-2 border'>Product Image</th><th class='px-4 py-2 border'>Price</th></tr></thead><tbody>";
+
+                            foreach ($order['products'] as $product) {
+                                echo "<tr>";
+                                echo "<td class='px-4 py-2 border'><img src='{$product['image']}' class='product-image' alt='{$product['name']}'></td>";
+                                echo "<td class='px-4 py-2 border'>\${$product['price']}</td>";
+                                echo "</tr>";
+                            }
+
+                            echo "</tbody></table>";
+                            echo "</td></tr>";
+
+                            echo "</tbody></table>";
+                            echo "</td></tr>";
                         }
-
-                        echo "</tbody></table>";
-                        echo "</td></tr>";
-
-                        echo "</tbody></table>";
-                        echo "</td></tr>";
                     }
+                } else {
+                    echo "<tr><td colspan='3' class='px-4 py-2 border'>Please select a date range.</td></tr>";
                 }
-            } else {
-                echo "<tr><td colspan='3'>Please select a date range.</td></tr>";
-            }
-            ?>
-        </tbody>
-    </table>
+                ?>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
     $(document).ready(function(){
         $('.toggle-details').click(function(){
@@ -157,7 +152,6 @@
 </script>
 </body>
 </html>
-
 
 </main>
 

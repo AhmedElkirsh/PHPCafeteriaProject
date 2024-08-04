@@ -4,9 +4,9 @@
 return [
     'database'=> [
 
-        'host'=> 'sql7.freesqldatabase.com',
+        'host'=> 'sql12.freesqldatabase.com',
         'port'=> 3306,
-        'dbname'=> 'sql7722701',
+        'dbname'=> 'sql12723920',
 
     ]
 ] 

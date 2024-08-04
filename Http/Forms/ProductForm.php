@@ -22,7 +22,7 @@ class ProductForm extends Form{
             $this->errors['category'] = 'Please provide a valid category name.';
         }
         if (!Validator::name($this->attributes['name'])) {
-            $this->errors['name'] = 'Please provide a valid category name.';
+            $this->errors['name'] = 'Please provide a valid product name.';
         }
         if (!Validator::time($this->attributes['time'])) {
             $this->errors['time'] = 'Please provide a valid time.';

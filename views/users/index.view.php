@@ -26,13 +26,13 @@
                     <?php foreach ($users as $user) : ?>
                         <tr>
                             <td class="border-b border-gray-200 dark:border-gray-700 p-4 text-gray-700 dark:text-gray-300 text-center">
-                                <img src="<?php echo htmlspecialchars($user['upload_dir']); ?>" alt="User Image" class="w-24 h-24 object-cover rounded-full mx-auto">
+                                <img src="<?= "/serve_image_user.php?image=" . $user['upload_dir']; ?>" alt="User Image" class="w-24 h-24 object-cover rounded-full mx-auto">
                             </td>
                             <td class="border-b border-gray-200 dark:border-gray-700 p-4 text-gray-700 dark:text-gray-300 text-center">
-                                <?php echo htmlspecialchars($user['name']); ?>
+                                <?= htmlspecialchars($user['name']); ?>
                             </td>
                             <td class="border-b border-gray-200 dark:border-gray-700 p-4 text-gray-700 dark:text-gray-300 text-center">
-                                <?php echo htmlspecialchars($user['email']); ?>
+                                <?= htmlspecialchars($user['email']); ?>
                             </td>
                             <td class="border-b border-gray-200 dark:border-gray-700 p-4 text-gray-700 dark:text-gray-300 text-center">
                                 <div class="flex justify-center gap-4">

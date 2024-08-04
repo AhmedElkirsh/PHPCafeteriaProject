@@ -115,7 +115,8 @@ class Authenticator {
             'name' => $name,
         ])->find();
         if (!$product) {
-            $upload_dir =  FileNameGenerator::generatePath($img,FileNameGenerator::USERS_DIR);
+            $upload_dir =  FileNameGenerator::generatePath($img,FileNameGenerator::PRODUCTS_DIR);
+            FileNameGenerator::checkUpload($img["tmp_name"], $upload_dir);
             $categories = App::resolve(Database::class)->query("select * from category")->get();
             $categoryId = ProductForm::getCategoryId($categoryname,$categories);
             

@@ -4,7 +4,7 @@ use Core\App;
 use Core\Database;
 
 $db = App::resolve(Database::class);
-$user_id = 23; // Or set this to the specific user ID you need
+$user_id = $_SESSION['user']['id']; // Or set this to the specific user ID you need
 
 $orders = $db->query("
     SELECT o.orderid, t.userid AS user_id, o.date AS order_date, o.orderstatus AS status, SUM(t.quantity * p.price) AS total

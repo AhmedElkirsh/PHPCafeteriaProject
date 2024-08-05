@@ -5,11 +5,24 @@ use Core\Database;
 
 $db = App::resolve(Database::class);
 $orderid = $_POST['orderid'];
-$user_id = 23; // Or set this to the specific user ID you need
+$user_id = $_SESSION['user']['id']; // Or set this to the specific user ID you need
 
-$order  = $db->query("select * from takes where orderid = :orederid",[
-    'orederid' => $orderid,
+$takes = $db->query("
+    SELECT 
+        t.userid, 
+        t.productname, 
+        t.orderid, 
+        t.quantity, 
+        p.price,
+        p.image
+    FROM takes t
+    JOIN product p ON t.productname = p.name
+    WHERE t.orderid = :orderid
+", [
+    'orderid' => $orderid,
 ])->get();
+
+
 
 $orders = $db->query("
     SELECT o.orderid, t.userid AS user_id, o.date AS order_date, o.orderstatus AS status, SUM(t.quantity * p.price) AS total
@@ -24,6 +37,6 @@ $orders = $db->query("
 ])->get();
 
 view('/my_orders/show.view.php',[
-    'order' => $order,
+    'takes' => $takes,
     'orders' => $orders,
 ]);

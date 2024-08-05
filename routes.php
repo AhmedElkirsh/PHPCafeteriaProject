@@ -34,3 +34,9 @@ $router->destroy('/products', 'products/destroy.php');
 $router->get('/products/create', 'products/create.php');
 $router->post('/products', 'products/store.php');
 $router->patch('/products/update', 'products/update.php');
+
+$router->get('/manual_orders', 'manual_orders/index.php');
+
+$router->get('/my_orders', 'my_orders/index.php');
+$router->destroy('/my_orders', 'my_orders/destroy.php');
+$router->post('/my_orders', 'my_orders/show.php');

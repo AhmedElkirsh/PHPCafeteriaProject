@@ -1,5 +1,6 @@
 <?php view('/partials/head.php'); ?>
 <?php view('/partials/nav.php'); ?>
+
 <main class="w-full flex justify-center">
     <div class="w-full max-w-md p-4 bg-white rounded-md shadow-md mt-7">
         <h1 class="text-2xl font-bold text-gray-900 text-center mb-3">EDIT PRODUCT</h1>
@@ -20,8 +21,8 @@
             </div>
             <div>
                 <label for="categoryname" class="block text-sm font-medium text-gray-900">Category</label>
-                <input id="categoryname" name="categoryname"  list="categoryOptions" autocomplete="off" required class="block w-full rounded-md border-gray-300 py-1 text-gray-900 shadow-sm focus:ring-indigo-600 sm:text-sm">
-                <datalist id="categoryOptions">
+                <input id="categoryname" name="categoryname"  list="categoryOptions" autocomplete="off" required class="block w-full rounded-md border-gray-300 py-1 text-gray-900 shadow-sm focus:ring-indigo-600 sm:text-sm" value=<?=getValueByKey(convertToAssocArray($categories), $product['categoryid']);?>>
+                <datalist id="categoryOptions" >
                     <?php foreach ($categories as $category) : ?>
                     <option value="<?= $category['categoryname'] ?>">
                     <?php endforeach ?>

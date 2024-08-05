@@ -1,6 +1,4 @@
 <?php 
-// this is the class responsible for connceting to the database
-// note that the $config variable 'somehow' refers to the config.php file, so when invoking this class, the proper dsn string is given
 
 namespace Core;
 

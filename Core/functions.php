@@ -43,3 +43,19 @@ function redirect($path) {
 function old ($key, $default='') {
     return \Core\Session::get('old')[$key] ?? $default;
 }
+
+function getValueByKey(array $array, $key, $default = null) {
+    return isset($array[$key]) ? $array[$key] : $default;
+}
+
+function convertToAssocArray(array $nestedArray) {
+    $assocArray = [];
+
+    foreach ($nestedArray as $item) {
+        if (isset($item['categoryid']) && isset($item['categoryname'])) {
+            $assocArray[$item['categoryid']] = $item['categoryname'];
+        }
+    }
+
+    return $assocArray;
+}

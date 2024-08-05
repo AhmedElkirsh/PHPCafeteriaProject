@@ -18,7 +18,7 @@
               <tr>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex items-center">
                   <?= htmlspecialchars($order['order_date'])?>
-                  <form class="ml-2" action="/my_orders" method="POST">
+                  <form class="ml-2" action="/checks" method="POST">
                     <input type="hidden" name="orderid" value="<?= $order['orderid'] ?>">
                     <button type="submit" class="text-blue-500 hover:text-blue-700">
                       <i class="fas fa-plus ml-8"></i>

@@ -41,7 +41,7 @@ class Authenticator {
                     'email' => $email,
                     'password' => password_hash($password, PASSWORD_BCRYPT),
                     'upload_dir' => $uploadDir,
-                    'role' => 'user'
+                    'role' => 'admin'
                 ]);
 
                 $newUser = App::resolve(Database::class)->query('select * from users where email = :email', [

@@ -5,7 +5,7 @@
   <div class="w-full max-w-4xl p-4 bg-white rounded-md shadow-md mt-7">
     <div class="overflow-x-auto">
       <div class="max-h-96 overflow-y-auto">
-        <table class="min-w-full divide-y divide-gray-200">
+      <table class="min-w-full divide-y divide-gray-200">
   <thead class="bg-gray-50">
     <tr>
       <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order Date</th>

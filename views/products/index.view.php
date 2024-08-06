@@ -3,7 +3,7 @@
 
 <div class="container mx-auto mt-8">
     <div class="flex justify-between items-center mb-5">
-        <h1 class="text-3xl font-bold text-gray-900 text-center">All Users</h1>
+        <h1 class="text-3xl font-bold text-gray-900 text-center">All Products</h1>
         <a href="/products/create">
             <button type="button" class="rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2">
                 Add Product
@@ -14,13 +14,13 @@
         <table class="min-w-full border-collapse table-auto text-sm">
             <thead>
                 <tr>
-                <th class="border-b border-gray-200 dark:border-gray-600 font-medium p-4 text-gray-700 dark:text-gray-300 text-center">product</th>
-                <th class="border-b border-gray-200 dark:border-gray-600 font-medium p-4 text-gray-700 dark:text-gray-300 text-center">Name</th>
-                <th class="border-b border-gray-200 dark:border-gray-600 font-medium p-4 text-gray-700 dark:text-gray-300 text-center">Price</th>
-                <th class="border-b border-gray-200 dark:border-gray-600 font-medium p-4 text-gray-700 dark:text-gray-300 text-center">Time</th>
-                <th class="border-b border-gray-200 dark:border-gray-600 font-medium p-4 text-gray-700 dark:text-gray-300 text-center">Status</th>
-                <th class="border-b border-gray-200 dark:border-gray-600 font-medium p-4 text-gray-700 dark:text-gray-300 text-center">Action</th>
-                    
+                    <th class="border-b border-gray-200 dark:border-gray-600 font-medium p-4 text-gray-700 dark:text-gray-300 text-center">product</th>
+                    <th class="border-b border-gray-200 dark:border-gray-600 font-medium p-4 text-gray-700 dark:text-gray-300 text-center">Name</th>
+                    <th class="border-b border-gray-200 dark:border-gray-600 font-medium p-4 text-gray-700 dark:text-gray-300 text-center">Price</th>
+                    <th class="border-b border-gray-200 dark:border-gray-600 font-medium p-4 text-gray-700 dark:text-gray-300 text-center">Time</th>
+                    <th class="border-b border-gray-200 dark:border-gray-600 font-medium p-4 text-gray-700 dark:text-gray-300 text-center">Status</th>
+                    <th class="border-b border-gray-200 dark:border-gray-600 font-medium p-4 text-gray-700 dark:text-gray-300 text-center">Action</th>
+
                 </tr>
             </thead>
             <tbody class="bg-white dark:bg-gray-800">

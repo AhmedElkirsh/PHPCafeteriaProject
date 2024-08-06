@@ -4,8 +4,8 @@ use Core\App;
 use Core\Database;
 
 $db = App::resolve(Database::class);
-$orderid = $_POST['orderid'];
-$user_id = $_POST['userid']; 
+$orderid = $_SESSION['order']['orderid'];
+$user_id = $_SESSION['user']['id']; 
 
 $order  = $db->query("select * from takes where orderid = :orederid",[
     'orederid' => $orderid,

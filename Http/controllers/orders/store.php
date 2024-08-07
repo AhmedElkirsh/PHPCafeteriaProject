@@ -8,7 +8,7 @@ use Http\Forms\CreateOrderForm;
 
 $db = App::resolve(Database::class);
 // validation goes here
-//dd($_POST);
+// dd($_POST);
 $form = CreateOrderForm::validateAttributes(
     $attributes = [
         'notes' => $_POST["notes"],
@@ -51,4 +51,8 @@ foreach ($orderQuantities as $product => $quantity) {
             'Quantity' => $quantity,
         ]);
 }
-redirect('/');
+
+$params = [
+    'orderid' => $orderid,
+];
+require_once __DIR__ . '/../my_orders/index.php';

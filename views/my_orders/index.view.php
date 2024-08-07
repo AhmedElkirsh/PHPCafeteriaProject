@@ -85,7 +85,6 @@
 <?php view('/partials/foot.php') ?>
 
 <script>
-
   document.addEventListener('DOMContentLoaded', () => {
     // Toggle button functionality
     document.querySelectorAll('.toggle-button').forEach(button => {
@@ -106,6 +105,14 @@
       const startDate = startDateInput ? new Date(startDateInput) : new Date('1970-01-01T00:00:00');
       // Default end date to the latest possible date if not provided
       const endDate = endDateInput ? new Date(endDateInput) : new Date('9999-12-31T23:59:59');
+      // Collapse all order details and reset toggle buttons
+      document.querySelectorAll('.order-details').forEach(details => {
+        details.classList.add('hidden');
+        const icon = details.closest('tr').querySelector('.toggle-button i');
+        if (icon) {
+          icon.classList.replace('fa-minus', 'fa-plus');
+        }
+      });
       // Apply filter based on dates and times
       document.querySelectorAll('tbody tr').forEach(row => {
         const orderDateCell = row.querySelector('.order-date');
@@ -114,10 +121,22 @@
           const [dateText, timeText] = orderDateText.split(' ');
           const orderDate = new Date(`${dateText}T${timeText}`); // Combine date and time
           // Display rows that fall within the date range
-          row.style.display = (!isNaN(orderDate.getTime()) && orderDate >= startDate && orderDate <= endDate) ? '' : 'none';
+          if (!isNaN(orderDate.getTime()) && orderDate >= startDate && orderDate <= endDate) {
+            row.style.display = '';
+            // Ensure the details are collapsed
+            const details = document.getElementById(`details-${row.querySelector('.toggle-button').dataset.orderid}`);
+            if (details) {
+              details.classList.add('hidden');
+              const icon = row.querySelector('.toggle-button i');
+              if (icon) {
+                icon.classList.replace('fa-minus', 'fa-plus');
+              }
+            }
+          } else {
+            row.style.display = 'none';
+          }
         }
       });
     });
   });
-
 </script>

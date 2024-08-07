@@ -23,6 +23,14 @@ $users = $db->query("
             'end_date' => $end_date
         ])->get();
 
-view('/checks/index.view.php', [
-    'users' => $users,
-]);
+foreach ($users as $user) {
+    echo "<tr>
+            <td class='px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex items-center'>
+                " . htmlspecialchars($user['name']) . "
+                <button class='showOrdersBtn text-blue-500 hover:text-blue-700 ml-2' data-user-id='" . $user['id'] . "'>
+                    <i class='fas fa-plus ml-8'></i>
+                </button>
+            </td>
+            <td class='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>" . htmlspecialchars($user['total']) . " EGP</td>
+        </tr>";
+}

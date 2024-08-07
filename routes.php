@@ -14,8 +14,10 @@ $router->post('/session', 'session/store.php')->only('guest');
 $router->destroy('/session', 'session/destroy.php')->only('auth');
 
 $router->get('/checks', 'checks/index.php');
-$router->post('/checks', 'checks/show.php');
+$router->post('/checks', 'checks/index.php');
+$router->post('/checks/orders', 'checks/show.php');
 $router->post('/checks/order', 'checks/showOrder.php');
+$router->post('/checks/filter', 'checks/filter.php');
 
 $router->get('/users', 'users/index.php');
 $router->destroy('/users/destroy', 'users/destroy.php');

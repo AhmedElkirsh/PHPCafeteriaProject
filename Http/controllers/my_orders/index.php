@@ -1,5 +1,4 @@
 <?php
-
 use Core\App;
 use Core\Database;
 
@@ -18,7 +17,25 @@ $orders = $db->query("
     'user_id' => $user_id
 ])->get();
 
+// takes query for showing specific orders details
+$takes = $db->query("
+    SELECT 
+        t.userid, 
+        t.productname, 
+        t.orderid, 
+        t.quantity, 
+        p.price,
+        p.image
+    FROM takes t
+    JOIN product p ON t.productname = p.name
+    WHERE t.userid = :user_id
+", [
+    'user_id' => $user_id
+])->get();
+
 view('/my_orders/index.view.php',[
     'orders' => $orders,
+    'takes' => $takes,
+    'orderid' => isset($params['orderid'])?$params['orderid']:-1,
 ]);
 

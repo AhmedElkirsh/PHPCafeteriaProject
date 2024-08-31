@@ -1,5 +1,7 @@
 <?php view('/partials/head.php'); ?>
 <?php view('/partials/nav.php'); ?>
+<script src="https://cdn.tailwindcss.com"></script>
+
 <main class="w-full flex justify-center">
     <div class="w-full max-w-md p-4 bg-white rounded-md shadow-md mt-7">
         <h1 class="text-2xl font-bold text-gray-900 text-center mb-3">EDIT USER</h1>

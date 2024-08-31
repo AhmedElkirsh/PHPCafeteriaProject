@@ -32,7 +32,7 @@ $orders = $db->query("
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex items-center">
                             <?= htmlspecialchars($order['order_date'])?>
-                            <button class="showOrderBtn text-blue-500 hover:text-blue-700 ml-2" data-orderid="<?= $order['orderid'] ?>">
+                            <button class="showOrderBtn text-accent-800 hover:text-accent-400 ml-2" data-orderid="<?= $order['orderid'] ?>">
                                 <i class="fas fa-eye ml-8"></i>
                             </button>
                         </td>

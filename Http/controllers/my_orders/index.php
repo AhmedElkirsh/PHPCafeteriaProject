@@ -11,7 +11,7 @@ $orders = $db->query("
     JOIN takes t ON o.orderid = t.orderid
     JOIN product p ON t.productname = p.name
     WHERE t.userid = :user_id
-    GROUP BY t.userid, o.date, o.orderstatus
+    GROUP BY o.orderid, t.userid, o.date, o.orderstatus
     ORDER BY o.date;
 ", [
     'user_id' => $user_id
@@ -36,6 +36,5 @@ $takes = $db->query("
 view('/my_orders/index.view.php',[
     'orders' => $orders,
     'takes' => $takes,
-    'orderid' => isset($params['orderid'])?$params['orderid']:-1,
+    'orderid' => isset($params['orderid']) ? $params['orderid'] : -1,
 ]);
-

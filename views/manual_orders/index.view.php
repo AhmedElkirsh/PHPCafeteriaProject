@@ -18,13 +18,13 @@
         if ($previousDate && $previousDate !== $currentDate) {
           // Output the buffered items for the previous date
           ?>
-          <div class="flex flex-wrap gap-4 mb-6">
+          <div class="flex flex-wrap gap-4">
             <?php foreach ($itemBuffer as $item) : ?>
               <div class="bg-white border border-gray-200 rounded-lg shadow-md p-2 mb-4 flex-none w-48">
                 <div class="flex items-center mb-2">
-                  <img src="<?= '/serve_image_product.php?image=' . htmlspecialchars($item['image']) ?>" alt="<?= htmlspecialchars($item['product_name']) ?>" class="w-20 h-20 object-cover rounded-md mr-2">
+                  <img src="<?= '/serve_image_product.php?image=' . htmlspecialchars($item['image']) ?>" alt="<?= htmlspecialchars($item['product_name']) ?>" class="w-20 h-20 object-contain rounded-md mr-2">
                   <div class="flex-1">
-                    <p class="text-sm font-semibold mb-1"><?= htmlspecialchars($item['product_name']) ?></p>
+                    <p class="text-sm font-semibold mb-1 text-text2"><?= htmlspecialchars($item['product_name']) ?></p>
                     <span class="block text-gray-700 mb-1 text-xs"><?= htmlspecialchars($item['price']) . " EGP" ?></span>
                     <span class="block text-gray-500 text-xs"><?= htmlspecialchars($item['quantity']) ?></span>
                   </div>
@@ -32,7 +32,7 @@
               </div>
             <?php endforeach; ?>
           </div>
-          <div class="text-right font-semibold text-lg mb-4">Total Price: <?= htmlspecialchars($totalPrice) ?> EGP</div>
+          <div class="text-right font-semibold text-lg mb-4 text-accent-900">Total Price: <?= htmlspecialchars($totalPrice) ?> EGP</div>
 
           <?php
           // Reset buffer and total price
@@ -54,20 +54,20 @@
         // Output the order details table for the current date, only if it's the first item for this date
         if ($key == 0 || ($previousDate !== $currentDate && $previousDate)) : ?>
           <table class="min-w-full divide-y divide-gray-200 mb-6">
-            <thead class="bg-gray-50">
+            <thead class="bg-secondary-50 sticky top-0">
               <tr>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Room Number</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-text2 uppercase tracking-wider">Date</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-text2 uppercase tracking-wider">Name</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-text2 uppercase tracking-wider">Room Number</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-text2 uppercase tracking-wider">Action</th>
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
               <tr>
-                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><?= htmlspecialchars($order["date"]) ?></td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= htmlspecialchars($order["name"]) ?></td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= htmlspecialchars($order["roomnumber"]) ?></td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= htmlspecialchars($order["type"]) ?></td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-text2"><?= htmlspecialchars($order["date"]) ?></td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-text2"><?= htmlspecialchars($order["name"]) ?></td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-text2"><?= htmlspecialchars($order["roomnumber"]) ?></td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-text2"><?= htmlspecialchars($order["type"]) ?></td>
               </tr>
             </tbody>
           </table>
@@ -81,9 +81,9 @@
           <?php foreach ($itemBuffer as $item) : ?>
             <div class="bg-white border border-gray-200 rounded-lg shadow-md p-2 mb-4 flex-none w-48">
               <div class="flex items-center mb-2">
-                <img src="<?= '/serve_image_product.php?image=' . htmlspecialchars($item['image']) ?>" alt="<?= htmlspecialchars($item['product_name']) ?>" class="w-20 h-20 object-cover rounded-md mr-2">
+                <img src="<?= '/serve_image_product.php?image=' . htmlspecialchars($item['image']) ?>" alt="<?= htmlspecialchars($item['product_name']) ?>" class="w-20 h-20 object-contain rounded-md mr-2">
                 <div class="flex-1">
-                  <p class="text-sm font-semibold mb-1"><?= htmlspecialchars($item['product_name']) ?></p>
+                  <p class="text-sm font-semibold mb-1 text-text2"><?= htmlspecialchars($item['product_name']) ?></p>
                   <span class="block text-gray-700 mb-1 text-xs"><?= htmlspecialchars($item['price']) . " EGP" ?></span>
                   <span class="block text-gray-500 text-xs"><?= htmlspecialchars($item['quantity']) ?></span>
                 </div>
@@ -91,7 +91,7 @@
             </div>
           <?php endforeach; ?>
         </div>
-        <div class="text-right font-semibold text-lg mb-4">Total Price: <?= htmlspecialchars($totalPrice) ?> EGP</div>
+        <div class="text-right font-semibold text-lg mb-4 text-accent-900">Total Price: <?= htmlspecialchars($totalPrice) ?> EGP</div>
       <?php endif; ?>
 
     </div>

@@ -3,8 +3,8 @@
 // this file is mainly used for database configuration, but other configs can be added later.
 return [
     'database' => [
-        'host' => 'sql12.freesqldatabase.com',
-        'dbname' => 'sql12723920',
+        'host' => 'localhost',
+        'dbname' => 'phpproject',
         'port' =>3306
     ]
 ];

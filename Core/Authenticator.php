@@ -162,10 +162,11 @@ class Authenticator {
     function login($user)
     {
         $_SESSION['user'] = [
+            'id' => $user['id'],
+            'name' => $user['name'],
             'email' => $user['email'],
             'img' => $user['upload_dir'],
             'role' => $user['role'],
-            'id' => $user['id']
         ];
 
         session_regenerate_id(true);

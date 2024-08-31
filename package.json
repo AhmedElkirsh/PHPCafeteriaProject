@@ -1,0 +1,17 @@
+{
+  "name": "phpproject",
+  "version": "1.0.0",
+  "description": "```\r use Core\\App;\r use Core\\Database;\r ```\r ### 2. get the database using this line\r ```\r $db = App::resolve(Database::class);\r ```\r ### 3. perform a query using the query method (u can chain find method or findOrfail) and store the result in a variable \r ```\r $note = $db->query(\"select * from notes where id=:id\",['id'=>$_POST['id']])->find();\r ```",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.41",
+    "tailwindcss": "^3.4.10"
+  }
+}

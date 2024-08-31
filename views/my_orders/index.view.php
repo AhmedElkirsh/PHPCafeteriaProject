@@ -4,17 +4,15 @@
 <main class="w-full flex justify-center py-6">
   <div class="w-full max-w-4xl p-6 bg-white rounded-md shadow-md mt-6">
     <!-- Filter Form -->
-    <form id="filter-form" class="flex flex-wrap items-center gap-4 pb-4 w-full border-b-4 border-gray-300">
+    <form id="filter-form" class="flex flex-wrap items-center gap-4 pb-4 w-full border-b-4 border-accent-500">
       <div class="flex-1 min-w-[150px]">
-        <label for="start_date" class="block text-sm text-center font-medium text-gray-700">Start Date & Time</label>
-        <input type="datetime-local" id="start_date" class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+        <input type="datetime-local" id="start_date" class=" block w-full p-2 border border-accent-500 rounded-md focus:ring-accent-500 focus:border-accent-500">
       </div>
       <div class="flex-1 min-w-[150px]">
-        <label for="end_date" class="block text-sm text-center font-medium text-gray-700">End Date & Time</label>
-        <input type="datetime-local" id="end_date" class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+        <input type="datetime-local" id="end_date" class=" block w-full p-2 border border-accent-500 rounded-md focus:ring-accent-500 focus:border-accent-500">
       </div>
 
-      <button type="button" id="filter-button" class="mt-auto bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-auto">
+      <button type="button" id="filter-button" class="mt-auto bg-accent-700 text-white px-6 py-2 rounded-md hover:bg-accent-800 focus:outline-none focus:ring-2 focus:ring-accent-700 w-full sm:w-auto">
         Filter
       </button>
     </form>
@@ -35,7 +33,7 @@
               <tr>
                 <td class="order-date px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex items-center">
                   <?= date('Y-m-d H:i:s', strtotime($order['order_date'])) ?>
-                  <button class="toggle-button text-blue-500 hover:text-blue-700 ml-8" data-orderid="<?= $order['orderid'] ?>">
+                  <button class="toggle-button text-accent-500 hover:text-accent-700 ml-8" data-orderid="<?= $order['orderid'] ?>">
                     <i class="fas fa-<?= $order['orderid'] == $orderid ? "minus" : "plus" ?>"></i>
                   </button>
                 </td>
@@ -58,7 +56,7 @@
                   <div id="details-<?= $order['orderid'] ?>" class="order-details flex flex-wrap gap-2 justify-center <?= $order['orderid'] == $orderid ? "" : "hidden" ?>">
                     <?php foreach ($takes as $item) : ?>
                       <?php if ($item['orderid'] == $order['orderid']) : ?>
-                        <div class="bg-white border my-3 w-[32%] h-[160px] border-gray-200 rounded-lg shadow-md flex flex-row">
+                        <div class="bg-white border my-3 w-[32%] h-[160px] border-accent-500 rounded-lg shadow-md flex flex-row">
                           <div class="w-[40%] flex-shrink-0">
                             <img src="/serve_image_product.php?image=<?= htmlspecialchars($item['image']) ?>" alt="<?= htmlspecialchars($item['productname']) ?>" class="w-full h-full object-cover rounded-md">
                           </div>
